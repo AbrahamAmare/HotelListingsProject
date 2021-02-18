@@ -1,0 +1,26 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using HotelListingsApi.Model;
+
+namespace HotelListingsApi.DTO
+{
+    public class CreateHotelDTO
+    {
+        [Required]
+        [StringLength(maximumLength: 100, ErrorMessage = "Hotel Name is too long")]
+        public string Name { get; set; }
+        [Required]
+        [StringLength(maximumLength: 100, ErrorMessage = "Address is too long")]
+        public string Address { get; set; }
+        [Required]
+        [Range(1, 5)]
+        public double Rating { get; set; }
+        public int CountryId { get; set; }
+    }
+
+    public class HotelDTO : CreateCountryDTO
+    {
+         public int Id { get; set; }
+         public CountryDTO Country { get; set; }
+    }
+}
