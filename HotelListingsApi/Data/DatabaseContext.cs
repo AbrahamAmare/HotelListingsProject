@@ -1,21 +1,25 @@
+using HotelListingsApi.Helpers;
 using HotelListingsApi.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListingsApi.Data
 {
-    public class DatabaseContext : DbContext
+    // public class DatabaseContext : DbContext
+    public class  DatabaseContext : IdentityDbContext<HotelListingsApiUser>
     {
-        public DatabaseContext(DbContextOptions options) :base(options)
+        public DatabaseContext(DbContextOptions options) : base(options)
         {
             
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new RoleConfiguration());
             builder.Entity<Country>().HasData(
                 new Country
-                {
-                    Id = 1,
+                {                    Id = 1,
                     Name = "Ethiopia",
                     SCO = "ETH"
                 },
@@ -67,6 +71,6 @@ namespace HotelListingsApi.Data
         }
 
         public DbSet<Country> Countries { get; set;}
-        public DbSet<Hotel> Hotel { get; set;}
+        public DbSet<Hotel> Hotels { get; set;}
     }
 }

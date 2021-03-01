@@ -9,7 +9,7 @@ namespace HotelListingsApi.DTO
         [Required]
         [StringLength(maximumLength: 30, ErrorMessage= "Country name is too long")]
         public string Name { get; set; } 
-         [Required]
+        [Required]
         [StringLength(maximumLength: 5, ErrorMessage= "SCO for country is too long")]
         public string SCO { get; set; }
     }

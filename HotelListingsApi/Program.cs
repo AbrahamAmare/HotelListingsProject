@@ -24,7 +24,7 @@ namespace HotelListingsApi
                 ).CreateLogger();
            try
            {
-               Log.Information("Application Is Startin");
+                Log.Information("Application Is Starting");
                 CreateHostBuilder(args).Build().Run();
            }
            catch (Exception ex)

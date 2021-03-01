@@ -1,4 +1,5 @@
 using AutoMapper;
+using HotelListingsApi.Data;
 using HotelListingsApi.DTO;
 using HotelListingsApi.Model;
 
@@ -12,6 +13,9 @@ namespace HotelListingsApi.Helpers
             CreateMap<Country, CreateCountryDTO>().ReverseMap();
             CreateMap<Hotel, HotelDTO>().ReverseMap();
             CreateMap<Hotel, CreateHotelDTO>().ReverseMap();
+            CreateMap<HotelListingsApiUser, UserDTO>().ReverseMap();
+            CreateMap<HotelListingsApiUser, RegisterDTO>().ReverseMap();
+            CreateMap<HotelListingsApiUser, LoginDTO>().ReverseMap();
         }
     }
 }

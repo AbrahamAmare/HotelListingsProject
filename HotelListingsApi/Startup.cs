@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using HotelListingsApi.Data;
+using HotelListingsApi.Extensions;
 using HotelListingsApi.Helpers;
+using HotelListingsApi.Interface;
+using HotelListingsApi.Repository;
+using HotelListingsApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace HotelListingsApi
@@ -33,19 +30,31 @@ namespace HotelListingsApi
                 options.UseSqlServer(Configuration.GetConnectionString("DbConnect"));
             });
 
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
+
             services.AddControllers();
-            services.AddCors(o => {
-                o.AddPolicy("CorsPolicy", builder => 
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy", builder => 
                     builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
 
             services.AddAutoMapper(typeof(MapperIntializer));
+            services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<IAuthService, AuthService>();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HotelListingsApi", Version = "v1" });
             });
+
+            services.AddControllers().AddNewtonsoftJson(options => 
+                options.SerializerSettings.ReferenceLoopHandling = 
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,10 +68,11 @@ namespace HotelListingsApi
             }
 
             app.UseHttpsRedirection();
+            
             app.UseCors("CorsPolicy");
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
