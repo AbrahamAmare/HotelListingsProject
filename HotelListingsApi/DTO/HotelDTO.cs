@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using HotelListingsApi.Model;
@@ -20,7 +21,11 @@ namespace HotelListingsApi.DTO
 
     public class HotelDTO : CreateHotelDTO
     {
-         public int Id { get; set; }
-         public CountryDTO Country { get; set; }
+        public int Id { get; set; }
+        public CountryDTO Country { get; set; }
+
     }
+
+    public class UpdateHotelDTO : CreateHotelDTO
+    { }
 }

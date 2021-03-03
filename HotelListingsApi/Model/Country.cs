@@ -8,6 +8,6 @@ namespace HotelListingsApi.Model
         public string Name { get; set; } 
         public string SCO { get; set; }
 
-        public virtual IList<Hotel> Hotels { get; set;}
+        public virtual IList<Hotel> Hotels { get; set; }
     }
 }

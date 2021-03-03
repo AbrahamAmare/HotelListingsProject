@@ -13,6 +13,7 @@ namespace HotelListingsApi.Helpers
             CreateMap<Country, CreateCountryDTO>().ReverseMap();
             CreateMap<Hotel, HotelDTO>().ReverseMap();
             CreateMap<Hotel, CreateHotelDTO>().ReverseMap();
+            // CreateMap<Hotel, UpdateHotelDTO>().ReverseMap();
             CreateMap<HotelListingsApiUser, UserDTO>().ReverseMap();
             CreateMap<HotelListingsApiUser, RegisterDTO>().ReverseMap();
             CreateMap<HotelListingsApiUser, LoginDTO>().ReverseMap();
